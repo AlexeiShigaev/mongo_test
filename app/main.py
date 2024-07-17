@@ -18,9 +18,9 @@ async def bot_event_handler(event):
     print("new event: {}".format(event.message.message))
     if event.message.message == "/start":
         await event.respond('Привет')
-        await event.respond(str(query_dict1))
-        await event.respond(str(query_dict2))
-        await event.respond(str(query_dict3))
+        await event.respond(json.dumps(query_dict1))
+        await event.respond(json.dumps(query_dict2))
+        await event.respond(json.dumps(query_dict3))
         return
     # предположим, сделали запрос. проверим
     try:
@@ -30,11 +30,11 @@ async def bot_event_handler(event):
         for key, elem in test_ret.items():
             results["dataset"].append(elem)
             results["labels"].append(key)
-        await event.respond(str(results))
+        await event.respond(json.dumps(results))
     except Exception as e:
         print(e)
-        await event.reply('Понимаю например так:')
-        await event.respond(str(query_dict1))
+        await event.reply('Не валидный запрос. Понимаю например так:')
+        await event.respond(json.dumps(query_dict1))
 
 
 async def on_start_up() -> None:
